@@ -66,7 +66,7 @@ By automating this, we eliminate human error, guarantee uniformity across all st
 While many startups focus on building Cloud POS software, **nobody focuses on the hardware foundation it runs on.** Retail OS Forge fills a massive gap in the market with several unique technical and conceptual advantages:
 
 1. **Enterprise MDM for the Little Guy:** Usually, "Zero-Touch Provisioning" (automatically debloating and configuring hardware) requires expensive Enterprise tools like Microsoft Intune, which small shop owners cannot afford or understand. We bring enterprise-grade hardware configuration to SMEs for free, with zero setup.
-2. **Bridging Web-Tech with Low-Level OS Control:** It is incredibly rare to see a beautifully designed web interface (featuring glassmorphism and particle physics) securely executing low-level Windows Registry edits and PowerShell wildcard sweeps. We bridged the gap between modern UI/UX and raw hardware administration.
+2. **Bridging Web-Tech with Low-Level OS Control:** It is incredibly rare to see a beautifully designed web interface securely executing low-level Windows Registry edits and PowerShell wildcard sweeps. We bridged the gap between modern UI/UX and raw hardware administration.
 3. **Omni-Architecture Design:** Instead of locking users into one format, we built the core engine to be universally adaptable. It functions perfectly as a modern Web-Desktop app, a lightweight Native Desktop app, AND a headless REST API that can be triggered over a network. 
 4. **Daemon-Threaded Execution:** System administration scripts notoriously freeze user interfaces. By implementing complex background threading and real-time `stdout` streaming, we provide a fluid, non-blocking user experience even while heavily modifying the host OS.
 
@@ -113,7 +113,6 @@ This is the flagship version. It uses the `pywebview` library to spawn a native 
 - **Frontend Stack:** HTML5, CSS3, Vanilla JavaScript.
 - **Design Elements:** 
   - Premium dark-mode aesthetic with CSS variables.
-  - Glassmorphism (frosted glass) UI elements.
   - Complex 3D tilt animations calculating mouse coordinates.
   - An interactive, physics-based HTML Canvas particle background (`entropyCanvas`).
 - **The Bridge:** The Python backend (`ForgeAPI` class) exposes functions to the JavaScript frontend. JS calls `pywebview.api.start_forge()`, Python executes PowerShell, and streams `stdout` back via `window.evaluate_js()`.
