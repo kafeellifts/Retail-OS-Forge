@@ -1,17 +1,17 @@
-# 🛠️ Retail OS Forge
+# Retail OS Forge
 
 *Automating the deployment of optimized, bloat-free Point of Sale (POS) terminals.*
 
 ---
 
-## 🛑 The Problem Statement
+##  The Problem Statement
 
 In the retail and small business sector, establishing a dedicated Point of Sale (POS) terminal is a surprisingly manual and frustrating process. When store owners purchase an off-the-shelf Windows machine to run their billing software, they face several hurdles:
 1. **Bloatware:** Consumer Windows PCs are loaded with resource-heavy bloatware (Candy Crush, Xbox Game Bar, Cortana) that slow down the machine and distract cashiers.
 2. **Interruptive System Behaviors:** Default Windows settings are geared towards personal use. Sleep timers activate during checkout, automated updates force reboots mid-transaction, and telemetry processes consume bandwidth.
 3. **Complex Setup:** Installing local, offline-first billing software (which is highly prevalent in India and developing markets) requires manual configuration that non-technical business owners struggle with.
 
-## 💡 The Solution: Retail OS Forge
+##  The Solution: Retail OS Forge
 
 **Retail OS Forge** is a hardware provisioning utility that solves this problem with a single click. It transforms a standard, bloated Windows installation into a clean, stripped-down, and optimized environment specifically tuned to act as a dedicated retail terminal. 
 
@@ -19,7 +19,7 @@ Instead of spending hours manually configuring settings and uninstalling apps, I
 
 ---
 
-## 💻 Tech Stack & Architecture
+## Tech Stack & Architecture
 
 This application is fundamentally a full-stack Python wrapper around Windows system commands. To demonstrate versatility, the core engine has been implemented across three different UI paradigms:
 
@@ -45,7 +45,7 @@ This application is fundamentally a full-stack Python wrapper around Windows sys
 
 ---
 
-## ✨ Key Features
+##  Key Features
 
 *   **Zero-Touch Debloating**: Automatically executes PowerShell pipelines (`Remove-AppxPackage`) to uninstall default Windows bloatware. Choose between "Basic" (Xbox, Zune) or "Aggressive" (Store, Calculator, Photos, etc.).
 *   **Hardware Optimizations**: Edits the Windows Registry (`HKLM`) and Power configurations (`powercfg`) to disable sleep mode, block telemetry, and disable Windows Copilot.
@@ -54,9 +54,9 @@ This application is fundamentally a full-stack Python wrapper around Windows sys
 
 ---
 
-## 🚀 Setup & Execution
+##  Setup & Execution
 
-**⚠️ WARNING: This tool executes commands that uninstall system applications and modify the Windows Registry. Run only on designated target machines, not your personal computer.**
+** WARNING: This tool executes commands that uninstall system applications and modify the Windows Registry. Run only on designated target machines, not your personal computer.**
 
 ### Prerequisites
 - Windows 10/11
@@ -87,7 +87,7 @@ You can launch whichever version of the application suits your needs:
 
 ---
 
-## ☁️ Hackathon Deployment Note
+##  Hackathon Deployment Note
 
 Because Retail OS Forge executes **local hardware commands**, standard cloud deployment (like pushing the backend to a free Linux server on Render or Heroku) will fail. Linux servers cannot execute Windows PowerShell commands or edit the Windows Registry.
 
