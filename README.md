@@ -1,4 +1,4 @@
-# 🛠️ Retail OS Forge
+#  Retail OS Forge
 
 Hey there! Welcome to **Retail OS Forge**. 
 
@@ -6,7 +6,7 @@ If you've ever had to set up a Windows machine to act as a dedicated Point of Sa
 
 I built this tool to automate all of that. You just click a few buttons, and it turns a standard, bloated Windows installation into a clean, optimized, and ready-to-go retail terminal.
 
-## ✨ What this actually does
+##  What this actually does
 
 Under the hood, this is a Python app that runs Windows PowerShell commands to get the job done. It handles three main things:
 
@@ -14,7 +14,7 @@ Under the hood, this is a Python app that runs Windows PowerShell commands to ge
 2. **Hardware Optimizations**: Disables sleep mode, turns off telemetry, and disables Windows Copilot so the machine focuses purely on running your store.
 3. **POS Setup**: Simulates the silent installation of popular Indian billing software (like Marg ERP, TallyPrime, Vyapar, etc.).
 
-## 🏗️ How it's built
+##  How it's built
 
 I experimented with a few different ways to build this, so you'll actually find a couple of different "versions" of the app in this repo:
 
@@ -22,7 +22,7 @@ I experimented with a few different ways to build this, so you'll actually find 
 * **The Traditional Desktop App (`main.py` & `retail_os_forge.py`)**: Built entirely in Python using `customtkinter`. It's lightweight and gets straight to the point.
 * **The API Backend (`api_server.py`)**: A FastAPI server that exposes the provisioning engine as a REST endpoint. Useful if you want to trigger setups remotely!
 
-## 🚀 How to run it locally
+##  How to run it locally
 
 Since this app literally alters Windows system files and uninstalls programs, **run it at your own risk!** It's designed for fresh machines you want to convert into terminals, not your personal gaming rig.
 
@@ -38,7 +38,7 @@ Since this app literally alters Windows system files and uninstalls programs, **
    ```
    *(or `python retail_os_forge.py` for the standalone version)*
 
-## ⚠️ A quick note on "Deploying" this
+##  A quick note on "Deploying" this
 
 If you're looking at this for a hackathon and want to deploy it to the cloud—be careful! The backend executes local Windows PowerShell commands. If you put the backend on a free Linux server (like Render), it won't work because Linux doesn't understand PowerShell or Windows Registries. 
 
@@ -46,4 +46,4 @@ This is fundamentally a **local hardware tool**. The best way to "distribute" it
 
 ---
 
-Feel free to poke around the code, fork it, or use the engine to build your own custom setup scripts. Happy forging! 🔨
+Feel free to poke around the code, fork it, or use the engine to build your own custom setup scripts. Happy forging! 
