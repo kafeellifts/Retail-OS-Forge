@@ -771,15 +771,17 @@ function handleForge() {
 def main():
     api = ForgeAPI()
     try:
-        import ctypes
-        user32 = ctypes.windll.user32
-        sw = user32.GetSystemMetrics(0)
-        sh = user32.GetSystemMetrics(1)
-        w, h = 900, 820
-        x = int((sw - w) / 2)
-        y = int((sh - h) / 2)
+        import webview
+        screens = webview.screens
+        target_screen = None
+        for s in screens:
+            if s.x == 0 and s.y == 0:
+                target_screen = s
+                break
+        if not target_screen and screens:
+            target_screen = screens[0]
     except:
-        x, y = None, None
+        target_screen = None
 
     window = webview.create_window(
         "Retail OS Forge",
@@ -787,11 +789,10 @@ def main():
         js_api=api,
         width=900,
         height=820,
-        x=x,
-        y=y,
         resizable=True,
         min_size=(700, 600),
         background_color="#000000",
+        screen=target_screen,
     )
     api.set_window(window)
     webview.start(debug=False)
