@@ -102,7 +102,7 @@ body{
   margin:0;
   position:relative;
 }
-
+#entropyCanvas{
   position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;
   background:#000;display:block;
 }
