@@ -27,22 +27,53 @@ OPTIMIZATION_COMMANDS = [
 
 POS_SOFTWARE = {
     "None": [],
-    "Marg": [
-        "Write-Host 'Downloading Marg POS...'",
-        "Start-Sleep -Seconds 2",
-        "Write-Host 'Installing Marg POS silently...'",
-        "Write-Host 'Marg POS Installation Complete.'"
+    "Marg ERP 9+": [
+        "Write-Host 'Downloading Marg ERP 9+...'",
+        "Invoke-WebRequest -Uri 'https://margcompusoft.com/download/MargSetup.exe' -OutFile \"$env:TEMP\\MargSetup.exe\" -UseBasicParsing -ErrorAction SilentlyContinue",
+        "Write-Host 'Installing Marg ERP silently...'",
+        "Start-Process -FilePath \"$env:TEMP\\MargSetup.exe\" -ArgumentList '/VERYSILENT', '/SUPPRESSMSGBOXES', '/NORESTART' -Wait -NoNewWindow -ErrorAction SilentlyContinue",
+        "Remove-Item -Path \"$env:TEMP\\MargSetup.exe\" -Force -ErrorAction SilentlyContinue",
+        "Write-Host 'Marg ERP Installation Complete.'"
     ],
     "TallyPrime": [
         "Write-Host 'Downloading TallyPrime...'",
-        "Start-Sleep -Seconds 2",
+        "Invoke-WebRequest -Uri 'https://mirror.tallysolutions.com/Downloads/TallyPrime/setup.exe' -OutFile \"$env:TEMP\\TallySetup.exe\" -UseBasicParsing -ErrorAction SilentlyContinue",
         "Write-Host 'Installing TallyPrime silently...'",
+        "Start-Process -FilePath \"$env:TEMP\\TallySetup.exe\" -ArgumentList '/s' -Wait -NoNewWindow -ErrorAction SilentlyContinue",
+        "Remove-Item -Path \"$env:TEMP\\TallySetup.exe\" -Force -ErrorAction SilentlyContinue",
         "Write-Host 'TallyPrime Installation Complete.'"
+    ],
+    "Busy Accounting": [
+        "Write-Host 'Downloading Busy Accounting...'",
+        "Invoke-WebRequest -Uri 'https://busy.in/download/busy21.exe' -OutFile \"$env:TEMP\\BusySetup.exe\" -UseBasicParsing -ErrorAction SilentlyContinue",
+        "Write-Host 'Installing Busy Accounting silently...'",
+        "Start-Process -FilePath \"$env:TEMP\\BusySetup.exe\" -ArgumentList '/S', '/v/qn' -Wait -NoNewWindow -ErrorAction SilentlyContinue",
+        "Remove-Item -Path \"$env:TEMP\\BusySetup.exe\" -Force -ErrorAction SilentlyContinue",
+        "Write-Host 'Busy Accounting Installation Complete.'"
     ],
     "Vyapar": [
         "Write-Host 'Downloading Vyapar...'",
-        "Start-Sleep -Seconds 2",
+        "Invoke-WebRequest -Uri 'https://static.vyaparapp.in/installers/Vyapar-setup.exe' -OutFile \"$env:TEMP\\VyaparSetup.exe\" -UseBasicParsing -ErrorAction SilentlyContinue",
         "Write-Host 'Installing Vyapar silently...'",
+        "Start-Process -FilePath \"$env:TEMP\\VyaparSetup.exe\" -ArgumentList '/S' -Wait -NoNewWindow -ErrorAction SilentlyContinue",
+        "Remove-Item -Path \"$env:TEMP\\VyaparSetup.exe\" -Force -ErrorAction SilentlyContinue",
         "Write-Host 'Vyapar Installation Complete.'"
+    ],
+    "Zoho Inventory": [
+        "Write-Host 'Creating Desktop Shortcut for Zoho Inventory Web...'",
+        "$WshShell = New-Object -comObject WScript.Shell",
+        "$Shortcut = $WshShell.CreateShortcut(\"$env:USERPROFILE\\Desktop\\Zoho Inventory.lnk\")",
+        "$Shortcut.TargetPath = 'msedge.exe'",
+        "$Shortcut.Arguments = 'https://inventory.zoho.com'",
+        "$Shortcut.Save()",
+        "Write-Host 'Zoho Inventory Setup Complete.'"
+    ],
+    "Hitech BillSoft": [
+        "Write-Host 'Downloading Hitech BillSoft...'",
+        "Invoke-WebRequest -Uri 'https://billingsoftware.in/download/HitechBillSoft.exe' -OutFile \"$env:TEMP\\HitechSetup.exe\" -UseBasicParsing -ErrorAction SilentlyContinue",
+        "Write-Host 'Installing Hitech BillSoft silently...'",
+        "Start-Process -FilePath \"$env:TEMP\\HitechSetup.exe\" -ArgumentList '/VERYSILENT', '/SUPPRESSMSGBOXES' -Wait -NoNewWindow -ErrorAction SilentlyContinue",
+        "Remove-Item -Path \"$env:TEMP\\HitechSetup.exe\" -Force -ErrorAction SilentlyContinue",
+        "Write-Host 'Hitech BillSoft Installation Complete.'"
     ]
 }
