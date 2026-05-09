@@ -770,12 +770,25 @@ function handleForge() {
 
 def main():
     api = ForgeAPI()
+    try:
+        import ctypes
+        user32 = ctypes.windll.user32
+        sw = user32.GetSystemMetrics(0)
+        sh = user32.GetSystemMetrics(1)
+        w, h = 900, 820
+        x = int((sw - w) / 2)
+        y = int((sh - h) / 2)
+    except:
+        x, y = None, None
+
     window = webview.create_window(
         "Retail OS Forge",
         html=HTML,
         js_api=api,
         width=900,
         height=820,
+        x=x,
+        y=y,
         resizable=True,
         min_size=(700, 600),
         background_color="#000000",
