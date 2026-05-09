@@ -1,10 +1,3 @@
-"""
-Retail OS Forge — Merged Desktop Application
-Uses pywebview to render the frontend UI inside a native window.
-The Python backend (ProvisioningEngine) executes PowerShell payloads
-and streams live logs back to the UI via a JS-Python bridge.
-"""
-
 import webview
 import subprocess
 import threading
@@ -13,11 +6,7 @@ import os
 import sys
 import json
 
-
-# ─── Provisioning Engine ─────────────────────────────────────────────────────
-
 class ForgeAPI:
-    """Exposed to JS via window.pywebview.api"""
 
     def __init__(self):
         self._window = None
@@ -53,7 +42,6 @@ class ForgeAPI:
         time.sleep(0.3)
 
     def start_forge(self, debloat, pos, optimize):
-        """Called from JS when FORGE is clicked. Runs in a thread."""
         if self._running:
             return
         self._running = True
@@ -67,16 +55,12 @@ class ForgeAPI:
         ts = time.strftime("%Y-%m-%dT%H:%M:%S")
         self._log(f"[ {ts} ] INITIALIZING PAYLOAD...")
         self._log(f"[ CONFIG ] debloat_level={debloat} | pos_software={pos} | optimize_hardware={optimize}")
-
-        # Phase 1: Debloat
         if debloat == "Aggressive":
             cmd = "Get-AppxPackage -AllUsers | Where-Object {$_.Name -notmatch 'Store|Calculator|Photos'} | Remove-AppxPackage"
             self._execute_cmd("Aggressive Debloat", cmd)
         elif debloat == "Basic":
             cmd = "Get-AppxPackage *xbox* | Remove-AppxPackage; Get-AppxPackage *zune* | Remove-AppxPackage"
             self._execute_cmd("Basic Debloat", cmd)
-
-        # Phase 2: Optimizations
         if optimize:
             cmd = (
                 "powercfg -change -standby-timeout-ac 0; "
@@ -85,8 +69,6 @@ class ForgeAPI:
                 "-Name 'TurnOffWindowsCopilot' -Value 1 -Type DWord -Force"
             )
             self._execute_cmd("Applying Optimizations", cmd)
-
-        # Phase 3: POS Software
         if pos and pos != "None":
             cmd = f"Write-Host 'Simulating silent install for {pos}...'"
             self._execute_cmd(f"Installing {pos}", cmd)
@@ -97,11 +79,7 @@ class ForgeAPI:
         self._running = False
 
     def reboot_system(self):
-        """Called from JS when REBOOT is clicked."""
         subprocess.run("shutdown /r /t 5", shell=True, creationflags=subprocess.CREATE_NO_WINDOW)
-
-
-# ─── HTML Frontend (Port of Forge Vault Terminal) ────────────────────────────
 
 HTML = r"""<!DOCTYPE html>
 <html lang="en" class="dark">
@@ -125,13 +103,10 @@ body{
   position:relative;
 }
 
-/* ── Entropy Canvas Background ── */
-#entropyCanvas{
   position:fixed;top:0;left:0;width:100vw;height:100vh;z-index:-2;
   background:#000;display:block;
 }
 
-/* ── Cursor-reactive glow overlay ── */
 .cursor-glow{
   position:fixed;inset:0;z-index:-1;pointer-events:none;
   background:radial-gradient(600px circle at var(--mx,50%) var(--my,50%),
@@ -144,7 +119,6 @@ body{
   background:linear-gradient(to bottom,rgba(0,0,0,0.35),transparent 40%,transparent 60%,rgba(0,0,0,0.55));
 }
 
-/* ── Striped Glass Overlay ── */
 .striped-overlay{
   position:fixed;inset:0;z-index:-1;pointer-events:none;
   background: repeating-linear-gradient(
@@ -156,7 +130,6 @@ body{
   );
 }
 
-/* ── Glass Panel ── */
 .glass-panel{
   position:relative;
   border-radius:10px;
@@ -184,7 +157,6 @@ body{
 }
 .glass-panel .glass-content{position:relative;z-index:2}
 
-/* ── Spotlight ── */
 .spotlight-wrapper {
   position: absolute;
   inset: 0;
@@ -204,7 +176,6 @@ body{
   background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 40%);
 }
 
-/* ── Lamp Effect ── */
 .lamp-effect {
   position: absolute;
   top: -8rem;
@@ -287,7 +258,6 @@ body{
   100% { width: 24rem; }
 }
 
-/* ── Glow Card Borders ── */
 .card-backdrop{
   position:absolute;inset:-2px;z-index:-1;border-radius:inherit;
   filter:url(#unopaq);pointer-events:none;
@@ -331,7 +301,6 @@ body{
   100%{background-position:0% 0%}
 }
 
-/* Outer glow bleed */
 .border-left::after,.border-right::after{
   content:'';position:absolute;top:0;width:12px;height:100%;
   filter:blur(8px);opacity:0.6;border-radius:inherit;
@@ -347,7 +316,6 @@ body{
 .border-top::after{top:-5px}
 .border-bottom::after{bottom:-5px}
 
-/* ── Marquee ── */
 .marquee-wrap{
   position:fixed;top:50%;left:0;right:0;transform:translateY(-50%);z-index:-1;
   overflow:hidden;pointer-events:none;user-select:none;
@@ -363,10 +331,8 @@ body{
 }
 @keyframes marqueeScroll{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
 
-/* ── Main container ── */
 .container{width:50vw;min-width:600px;position:relative;z-index:1}
 
-/* ── Header ── */
 .header{text-align:center;margin-bottom:48px;padding-bottom:24px;animation:fadeUp .6s ease-out}
 .header h1{
   font-family:'Space Grotesk',sans-serif;
@@ -383,7 +349,6 @@ body{
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);filter:blur(8px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
 
-/* ── Sections ── */
 .section{margin-bottom:28px;animation:fadeUp .6s ease-out both}
 .section:nth-child(2){animation-delay:.1s}
 .section:nth-child(3){animation-delay:.2s}
@@ -394,7 +359,6 @@ body{
   color:var(--muted);margin-bottom:12px;
 }
 
-/* ── Debloat Buttons ── */
 .btn-group{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 .btn-pill{
   position:relative;min-width:140px;padding:10px 20px;
@@ -412,7 +376,6 @@ body{
   opacity:0.15;pointer-events:none;
 }
 
-/* ── Select / Dropdown ── */
 .select-wrap{position:relative;width:100%}
 .select-trigger{
   display:flex;align-items:center;justify-content:space-between;width:100%;
@@ -426,7 +389,6 @@ body{
 .select-trigger:focus{outline:none;border-color:rgba(255,255,255,0.4);box-shadow:0 0 0 2px rgba(255,255,255,0.1)}
 .select-trigger option{background:#111;color:#fff}
 
-/* ── Checkbox Row ── */
 .checkbox-row{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:rgba(255,255,255,0.8)}
 .checkbox-row input[type="checkbox"]{
   appearance:none;width:20px;height:20px;min-width:20px;margin-top:2px;
@@ -442,7 +404,6 @@ body{
 .checkbox-row input[type="checkbox"]:hover{transform:scale(1.05)}
 .checkbox-row label{cursor:pointer;line-height:1.6}
 
-/* ── Legal Box ── */
 .legal-box{
   display:flex;align-items:flex-start;gap:12px;padding:16px;
   border:1px solid rgba(245,158,11,0.2);border-radius:8px;
@@ -450,7 +411,6 @@ body{
 }
 .legal-icon{color:var(--amber);font-size:20px;flex-shrink:0;margin-top:2px}
 
-/* ── Forge Button ── */
 .forge-wrap{display:flex;justify-content:center;margin-top:32px;animation:fadeUp .6s ease-out .5s both}
 .forge-btn{
   position:relative;padding:16px 32px;border:1px solid var(--border);border-radius:999px;
@@ -465,7 +425,6 @@ body{
 .forge-btn.forging{animation:pulse 1.5s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
 
-/* ── Terminal ── */
 .terminal-wrap{margin-top:32px;animation:fadeUp .6s ease-out .6s both}
 .terminal-label{
   display:flex;align-items:center;gap:8px;font-size:10px;font-weight:600;
@@ -486,7 +445,6 @@ body{
 }
 @keyframes blink{50%{opacity:0}}
 
-/* ── Scrollbar ── */
 .terminal::-webkit-scrollbar{width:6px}
 .terminal::-webkit-scrollbar-track{background:transparent}
 .terminal::-webkit-scrollbar-thumb{background:rgba(52,211,153,0.3);border-radius:3px}
@@ -494,7 +452,6 @@ body{
 </head>
 <body>
 
-<!-- SVG Filters -->
 <svg style="display:none">
   <filter id="glass-distortion" x="0%" y="0%" width="100%" height="100%" filterUnits="objectBoundingBox">
     <feTurbulence type="fractalNoise" baseFrequency="0.001 0.005" numOctaves="1" seed="17" result="turbulence"/>
@@ -542,13 +499,12 @@ body{
 <div class="border-element border-top"></div>
 <div class="border-element border-bottom"></div>
 <div class="glass-content">
-  <!-- Header -->
+  
   <div class="header">
     <h1>RETAIL OS FORGE</h1>
     <div class="subtitle">Hardware Provisioning Payload</div>
   </div>
 
-  <!-- 01 / Debloat Level -->
   <div class="section">
     <div class="section-label">01 / Debloat Level</div>
     <div class="btn-group" id="debloatGroup">
@@ -558,7 +514,6 @@ body{
     </div>
   </div>
 
-  <!-- 02 / POS Software -->
   <div class="section">
     <div class="section-label">02 / POS Software</div>
     <div class="select-wrap">
@@ -574,7 +529,6 @@ body{
     </div>
   </div>
 
-  <!-- 03 / Optimizations -->
   <div class="section">
     <div class="section-label">03 / Optimizations</div>
     <div class="checkbox-row">
@@ -583,7 +537,6 @@ body{
     </div>
   </div>
 
-  <!-- 04 / Legal -->
   <div class="section">
     <div class="section-label">04 / Legal Acknowledgement</div>
     <div class="legal-box">
@@ -595,12 +548,10 @@ body{
     </div>
   </div>
 
-  <!-- Forge Button -->
   <div class="forge-wrap">
     <button class="forge-btn" id="forgeBtn" disabled onclick="handleForge()">FORGE RETAIL TERMINAL</button>
   </div>
 
-  <!-- Terminal -->
   <div class="terminal-wrap">
     <div class="terminal-label">
       <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"/><line x1="12" x2="20" y1="19" y2="19"/></svg>
@@ -618,8 +569,6 @@ body{
 let debloatLevel = 'Basic';
 let forging = false;
 let completed = false;
-
-// ── Tilt Card Logic ──
 (function(){
   const card = document.getElementById('tiltCard');
   const wrapper = document.getElementById('spotlightWrapper');
@@ -627,7 +576,7 @@ let completed = false;
   const tiltLimit = 15;
   const scale = 1.02;
   const perspective = 1200;
-  const dir = -1; // evade
+  const dir = -1;
 
   card.addEventListener('pointermove', function(e){
     const rect = card.getBoundingClientRect();
@@ -649,8 +598,6 @@ let completed = false;
     wrapper.style.opacity = 0;
   });
 })();
-
-// ── Cursor glow ──
 const _glow = document.getElementById('cursorGlow');
 let _mouseX = -1, _mouseY = -1;
 document.addEventListener('mousemove', function(e){
@@ -658,8 +605,6 @@ document.addEventListener('mousemove', function(e){
   _glow.style.setProperty('--mx', e.clientX + 'px');
   _glow.style.setProperty('--my', e.clientY + 'px');
 });
-
-// ── Entropy Particle Background ──
 (function(){
   const canvas = document.getElementById('entropyCanvas');
   const ctx = canvas.getContext('2d');
@@ -689,7 +634,6 @@ document.addEventListener('mousemove', function(e){
   }
 
   Particle.prototype.update = function(){
-    // Mouse repulsion
     if(_mouseX > 0){
       const mdx = this.x - _mouseX, mdy = this.y - _mouseY;
       const md = Math.sqrt(mdx*mdx + mdy*mdy);
@@ -699,8 +643,6 @@ document.addEventListener('mousemove', function(e){
         this.vy += (mdy / md) * force;
       }
     }
-
-    // All particles: chaotic Brownian motion
     this.vx += (Math.random() - 0.5) * 0.5;
     this.vy += (Math.random() - 0.5) * 0.5;
     this.vx *= 0.95; this.vy *= 0.95;
@@ -786,15 +728,11 @@ function toggleForge() {
   const ack = document.getElementById('ackCheck').checked;
   btn.disabled = !ack || forging;
 }
-
-// Called from Python to append log lines
 window.__appendLog = function(msg) {
   const term = document.getElementById('terminal');
   term.textContent += msg + '\n';
   term.scrollTop = term.scrollHeight;
 };
-
-// Called from Python when forge is complete
 window.__onForgeComplete = function() {
   forging = false;
   completed = true;
@@ -830,9 +768,6 @@ function handleForge() {
 </html>
 """
 
-
-# ─── App Entry Point ─────────────────────────────────────────────────────────
-
 def main():
     api = ForgeAPI()
     window = webview.create_window(
@@ -847,7 +782,6 @@ def main():
     )
     api.set_window(window)
     webview.start(debug=False)
-
 
 if __name__ == "__main__":
     main()
