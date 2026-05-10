@@ -83,13 +83,11 @@ The program applies the following system-level optimizations:
    ```
 
 3. **Setup the Modern UI:**
-   Navigate to the UI folder and install Node dependencies:
+   We've provided a script to handle the nested directory setup and building automatically. Run this from the project root:
    ```bash
-   cd forge-vault-terminal-main/forge-vault-terminal-main
-   npm install
-   npm run build
-   cd ../..
+   setup_ui.bat
    ```
+   *(Or manually: cd forge-vault-terminal-main/forge-vault-terminal-main && npm install && npm run build)*
 
 ### Running the Application
 To start the Retail OS Forge with the ultra-modern UI:
