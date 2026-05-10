@@ -5,6 +5,7 @@ import time
 import os
 import sys
 import json
+import config
 
 class ForgeAPI:
 
@@ -25,8 +26,8 @@ class ForgeAPI:
         self._log(f"$ powershell -Command \"{cmd}\"")
         try:
             process = subprocess.run(
-                ["powershell", "-Command", cmd],
-                shell=True,
+                ["powershell", "-NoProfile", "-NonInteractive", "-Command", cmd],
+                shell=False,
                 capture_output=True,
                 text=True,
                 creationflags=subprocess.CREATE_NO_WINDOW
@@ -69,8 +70,9 @@ class ForgeAPI:
                 "-Name 'TurnOffWindowsCopilot' -Value 1 -Type DWord -Force"
             )
             self._execute_cmd("Applying Optimizations", cmd)
-        if pos and pos != "None":
-            cmd = f"Write-Host 'Simulating silent install for {pos}...'"
+        if pos and pos != "None" and pos in config.POS_SOFTWARE:
+            self._log(f"\n[ ENGINE ] Executing actual silent install for {pos}...")
+            cmd = "; ".join(config.POS_SOFTWARE[pos])
             self._execute_cmd(f"Installing {pos}", cmd)
 
         self._log("\n[!] PROVISIONING COMPLETE.")
@@ -768,7 +770,20 @@ function handleForge() {
 </html>
 """
 
+import ctypes
+
+def is_admin():
+    try:
+        return ctypes.windll.shell32.IsUserAnAdmin()
+    except:
+        return False
+
 def main():
+    if not is_admin():
+        # Re-run the program with admin rights
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+        sys.exit()
+
     api = ForgeAPI()
     try:
         import webview

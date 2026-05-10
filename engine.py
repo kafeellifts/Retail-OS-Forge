@@ -17,8 +17,8 @@ class ProvisioningEngine:
             try:
                 # Execute command without spawning a visible console window
                 process = subprocess.run(
-                    ["powershell", "-Command", cmd],
-                    shell=True,
+                    ["powershell", "-NoProfile", "-NonInteractive", "-Command", cmd],
+                    shell=False,
                     capture_output=True,
                     text=True,
                     creationflags=subprocess.CREATE_NO_WINDOW

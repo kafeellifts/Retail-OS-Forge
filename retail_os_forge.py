@@ -2,6 +2,7 @@ import customtkinter as ctk
 import threading
 import subprocess
 import time
+import config
 
 class RetailOSForge(ctk.CTk):
     def __init__(self):
@@ -110,8 +111,8 @@ class RetailOSForge(ctk.CTk):
         self.after(0, self.log, f"$ powershell -Command \"{cmd}\"")
         try:
             process = subprocess.run(
-                ["powershell", "-Command", cmd],
-                shell=True,
+                ["powershell", "-NoProfile", "-NonInteractive", "-Command", cmd],
+                shell=False,
                 capture_output=True,
                 text=True,
                 creationflags=subprocess.CREATE_NO_WINDOW
@@ -144,8 +145,9 @@ class RetailOSForge(ctk.CTk):
             self.execute_cmd("Applying Optimizations", cmd)
 
         # Phase 3: POS Install
-        if pos != "None":
-            cmd = f"Write-Host 'Simulating silent install for {pos}...'"
+        if pos != "None" and pos in config.POS_SOFTWARE:
+            self.after(0, self.log, f"Executing actual silent install for {pos}...")
+            cmd = "; ".join(config.POS_SOFTWARE[pos])
             self.execute_cmd(f"Installing {pos}", cmd)
 
         # Completion Sequence
