@@ -13,8 +13,24 @@ class RetailOSForgeUI(ctk.CTk):
         super().__init__()
 
         self.title("Retail OS Forge")
-        self.geometry("650x700")
-        self.resizable(False, False)
+        
+        # Determine optimal window size
+        window_width = 650
+        window_height = 750
+        
+        screen_width = self.winfo_screenwidth()
+        screen_height = self.winfo_screenheight()
+        
+        # Cap height if screen is too small
+        if window_height > screen_height - 100:
+            window_height = screen_height - 100
+            
+        x = (screen_width // 2) - (window_width // 2)
+        y = (screen_height // 2) - (window_height // 2)
+        
+        self.geometry(f"{window_width}x{window_height}+{x}+{y}")
+        self.resizable(True, True)
+        self.minsize(500, 500)
         
         # Configure grid for main window
         self.grid_columnconfigure(0, weight=1)
@@ -27,9 +43,15 @@ class RetailOSForgeUI(ctk.CTk):
         )
         self.title_label.grid(row=0, column=0, padx=20, pady=(20, 10))
 
+        # --- Scrollable Container for Settings ---
+        self.scroll_frame = ctk.CTkScrollableFrame(self, label_text="Configuration")
+        self.scroll_frame.grid(row=1, column=0, padx=20, pady=10, sticky="nsew")
+        self.grid_rowconfigure(1, weight=1)
+        self.scroll_frame.grid_columnconfigure(0, weight=1)
+
         # --- Debloat Level Selection ---
-        self.debloat_frame = ctk.CTkFrame(self)
-        self.debloat_frame.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
+        self.debloat_frame = ctk.CTkFrame(self.scroll_frame)
+        self.debloat_frame.grid(row=0, column=0, padx=10, pady=10, sticky="ew")
         
         self.debloat_label = ctk.CTkLabel(
             self.debloat_frame, 
@@ -50,8 +72,8 @@ class RetailOSForgeUI(ctk.CTk):
         self.radio_aggressive.grid(row=0, column=3, padx=10, pady=15)
 
         # --- System Optimizations ---
-        self.opt_frame = ctk.CTkFrame(self)
-        self.opt_frame.grid(row=2, column=0, padx=20, pady=10, sticky="ew")
+        self.opt_frame = ctk.CTkFrame(self.scroll_frame)
+        self.opt_frame.grid(row=1, column=0, padx=10, pady=10, sticky="ew")
         
         self.opt_var = ctk.BooleanVar(value=False)
         self.opt_checkbox = ctk.CTkCheckBox(
@@ -63,8 +85,8 @@ class RetailOSForgeUI(ctk.CTk):
         self.opt_checkbox.grid(row=0, column=0, padx=15, pady=15, sticky="w")
 
         # --- POS Software Selection ---
-        self.pos_frame = ctk.CTkFrame(self)
-        self.pos_frame.grid(row=3, column=0, padx=20, pady=10, sticky="ew")
+        self.pos_frame = ctk.CTkFrame(self.scroll_frame)
+        self.pos_frame.grid(row=2, column=0, padx=10, pady=10, sticky="ew")
         
         self.pos_label = ctk.CTkLabel(
             self.pos_frame, 
@@ -84,19 +106,24 @@ class RetailOSForgeUI(ctk.CTk):
         )
         self.pos_dropdown.grid(row=0, column=1, padx=15, pady=15, sticky="w")
 
+        # --- Footer Section (Fixed at bottom) ---
+        self.footer_frame = ctk.CTkFrame(self, fg_color="transparent")
+        self.footer_frame.grid(row=2, column=0, padx=20, pady=(10, 20), sticky="ew")
+        self.footer_frame.grid_columnconfigure(0, weight=1)
+
         # --- Terms & Conditions ---
         self.tc_var = ctk.BooleanVar(value=False)
         self.tc_checkbox = ctk.CTkCheckBox(
-            self, 
+            self.footer_frame, 
             text="I agree to the Terms & Conditions and understand these changes.", 
             variable=self.tc_var, 
             command=self.toggle_forge_button
         )
-        self.tc_checkbox.grid(row=4, column=0, padx=20, pady=(20, 10))
+        self.tc_checkbox.grid(row=0, column=0, padx=20, pady=(10, 5))
 
         # --- FORGE Button ---
         self.forge_button = ctk.CTkButton(
-            self, 
+            self.footer_frame, 
             text="FORGE", 
             font=ctk.CTkFont(size=20, weight="bold"), 
             height=50, 
@@ -105,17 +132,16 @@ class RetailOSForgeUI(ctk.CTk):
             fg_color="#8B0000",
             hover_color="#5C0000"
         )
-        self.forge_button.grid(row=5, column=0, padx=20, pady=10, sticky="ew")
+        self.forge_button.grid(row=1, column=0, padx=20, pady=10, sticky="ew")
 
         # --- Log Output Box ---
         self.log_textbox = ctk.CTkTextbox(
-            self, 
+            self.footer_frame, 
             state="disabled", 
-            height=180,
+            height=150,
             font=ctk.CTkFont(family="Consolas", size=12)
         )
-        self.log_textbox.grid(row=6, column=0, padx=20, pady=(10, 20), sticky="nsew")
-        self.grid_rowconfigure(6, weight=1)
+        self.log_textbox.grid(row=2, column=0, padx=20, pady=(5, 10), sticky="nsew")
 
     def toggle_forge_button(self):
         """Enable or disable the Forge button based on T&C checkbox."""
