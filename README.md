@@ -60,3 +60,39 @@ The program applies the following system-level optimizations:
 - **pywebview:** Provides a native Windows wrapper to render the web-based frontend (`forge_app.py`).
 - **HTML5, CSS3, Vanilla JavaScript:** Drives the modern web interface, including 3D tilt effects and dynamic HTML Canvas backgrounds.
 - **FastAPI & Uvicorn:** Powers the REST API engine (`api_server.py`) allowing for headless execution and network-based terminal provisioning.
+
+---
+
+## Getting Started
+
+### Prerequisites
+- **Operating System:** Windows 10 or 11
+- **Python:** Python 3.7 or higher installed
+
+### Installation
+1. **Clone the repository:**
+   ```bash
+   git clone https://github.com/kafeellifts/Retail-OS-Forge.git
+   cd Retail-OS-Forge
+   ```
+
+2. **Install dependencies:**
+   It is recommended to use a virtual environment, but you can install them globally:
+   ```bash
+   pip install -r requirements.txt
+   ```
+
+### Running the Application
+To start the Retail OS Forge utility, run the following command in your terminal:
+```bash
+python main.py
+```
+
+> [!IMPORTANT]
+> **Admin Privileges:** The application needs to modify registry settings and remove system packages. It will automatically attempt to restart with Administrator privileges if needed.
+
+### Project Structure
+- `main.py`: The primary entry point (Basic UI).
+- `forge_app.py`: The Modern "Neon" UI version.
+- `api_server.py`: The headless API server version.
+- `config.py`: Centralized configuration for all commands and software links.
