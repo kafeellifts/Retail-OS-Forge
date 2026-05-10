@@ -135,7 +135,7 @@ body{
 .glass-panel{
   position:relative;
   border-radius:10px;
-  padding:12px 24px 12px;
+  padding:48px 40px 40px;
   overflow:hidden;
   border: 1px solid rgba(164,132,215,0.5);
   background: rgba(85,80,110,0.15);
@@ -335,35 +335,35 @@ body{
 
 .container{width:50vw;min-width:600px;position:relative;z-index:1}
 
-.header{text-align:center;margin-bottom:8px;padding-bottom:4px;animation:fadeUp .6s ease-out}
+.header{text-align:center;margin-bottom:48px;padding-bottom:24px;animation:fadeUp .6s ease-out}
 .header h1{
   font-family:'Space Grotesk',sans-serif;
-  font-size:clamp(1.5rem,5vw,2.5rem);font-weight:700;letter-spacing:.3em;
+  font-size:clamp(2.5rem,7vw,4.5rem);font-weight:700;letter-spacing:.3em;
   background:linear-gradient(to bottom,rgba(255,255,255,0.2),rgba(255,255,255,0.0));
   -webkit-background-clip:text;background-clip:text;color:transparent;
   -webkit-text-stroke: 2px #ffffff;
   filter:drop-shadow(0 0 30px rgba(0,255,255,0.3));
 }
 .header .subtitle{
-  margin-top:4px;font-size:10px;font-weight:600;letter-spacing:.5em;
+  margin-top:16px;font-size:10px;font-weight:600;letter-spacing:.5em;
   text-transform:uppercase;color:var(--muted);
 }
 
 @keyframes fadeUp{from{opacity:0;transform:translateY(12px);filter:blur(8px)}to{opacity:1;transform:translateY(0);filter:blur(0)}}
 
-.section{margin-bottom:8px;animation:fadeUp .6s ease-out both}
+.section{margin-bottom:28px;animation:fadeUp .6s ease-out both}
 .section:nth-child(2){animation-delay:.1s}
 .section:nth-child(3){animation-delay:.2s}
 .section:nth-child(4){animation-delay:.3s}
 .section:nth-child(5){animation-delay:.4s}
 .section-label{
   font-size:10px;font-weight:600;letter-spacing:.3em;text-transform:uppercase;
-  color:var(--muted);margin-bottom:4px;
+  color:var(--muted);margin-bottom:12px;
 }
 
-.btn-group{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+.btn-group{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
 .btn-pill{
-  position:relative;min-width:140px;padding:6px 12px;
+  position:relative;min-width:140px;padding:10px 20px;
   border:1px solid var(--border);border-radius:999px;
   background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);
   color:var(--muted);font-size:11px;font-weight:600;letter-spacing:.25em;
@@ -381,7 +381,7 @@ body{
 .select-wrap{position:relative;width:100%}
 .select-trigger{
   display:flex;align-items:center;justify-content:space-between;width:100%;
-  height:32px;padding:0 16px;
+  height:44px;padding:0 16px;
   border:1px solid var(--border);border-radius:8px;
   background:rgba(255,255,255,0.03);color:#fff;font-size:14px;
   cursor:pointer;transition:all .2s;appearance:none;
@@ -391,9 +391,9 @@ body{
 .select-trigger:focus{outline:none;border-color:rgba(255,255,255,0.4);box-shadow:0 0 0 2px rgba(255,255,255,0.1)}
 .select-trigger option{background:#111;color:#fff}
 
-.checkbox-row{display:flex;align-items:flex-start;gap:8px;font-size:12px;color:rgba(255,255,255,0.8)}
+.checkbox-row{display:flex;align-items:flex-start;gap:12px;font-size:14px;color:rgba(255,255,255,0.8)}
 .checkbox-row input[type="checkbox"]{
-  appearance:none;width:16px;height:16px;min-width:16px;margin-top:2px;
+  appearance:none;width:20px;height:20px;min-width:20px;margin-top:2px;
   border:1px solid rgba(255,255,255,0.3);border-radius:4px;
   background:rgba(255,255,255,0.05);cursor:pointer;
   transition:all .2s;position:relative;
@@ -401,21 +401,21 @@ body{
 .checkbox-row input[type="checkbox"]:checked{background:#fff;border-color:#fff}
 .checkbox-row input[type="checkbox"]:checked::after{
   content:'✓';position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
-  color:#000;font-size:12px;font-weight:700;
+  color:#000;font-size:14px;font-weight:700;
 }
 .checkbox-row input[type="checkbox"]:hover{transform:scale(1.05)}
 .checkbox-row label{cursor:pointer;line-height:1.6}
 
 .legal-box{
-  display:flex;align-items:flex-start;gap:8px;padding:8px;
+  display:flex;align-items:flex-start;gap:12px;padding:16px;
   border:1px solid rgba(245,158,11,0.2);border-radius:8px;
   background:rgba(245,158,11,0.05);
 }
-.legal-icon{color:var(--amber);font-size:16px;flex-shrink:0;margin-top:0px}
+.legal-icon{color:var(--amber);font-size:20px;flex-shrink:0;margin-top:2px}
 
-.forge-wrap{display:flex;justify-content:center;margin-top:12px;animation:fadeUp .6s ease-out .5s both}
+.forge-wrap{display:flex;justify-content:center;margin-top:32px;animation:fadeUp .6s ease-out .5s both}
 .forge-btn{
-  position:relative;padding:10px 24px;border:1px solid var(--border);border-radius:999px;
+  position:relative;padding:16px 32px;border:1px solid var(--border);border-radius:999px;
   background:rgba(0,0,0,0.4);backdrop-filter:blur(4px);
   color:#fff;font-size:13px;font-weight:700;letter-spacing:.3em;text-transform:uppercase;
   cursor:pointer;transition:all .3s ease;overflow:hidden;
@@ -427,14 +427,14 @@ body{
 .forge-btn.forging{animation:pulse 1.5s ease-in-out infinite}
 @keyframes pulse{0%,100%{opacity:1}50%{opacity:.6}}
 
-.terminal-wrap{margin-top:12px;animation:fadeUp .6s ease-out .6s both}
+.terminal-wrap{margin-top:32px;animation:fadeUp .6s ease-out .6s both}
 .terminal-label{
   display:flex;align-items:center;gap:8px;font-size:10px;font-weight:600;
-  letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:4px;
+  letter-spacing:.3em;text-transform:uppercase;color:var(--muted);margin-bottom:8px;
 }
 .terminal-label svg{width:14px;height:14px}
 .terminal{
-  height:120px;overflow-y:auto;padding:8px;
+  height:260px;overflow-y:auto;padding:16px;
   border:1px solid rgba(52,211,153,0.2);border-radius:8px;
   background:rgba(0,0,0,0.9);
   font-family:'JetBrains Mono',monospace;font-size:12px;line-height:1.8;
@@ -781,12 +781,8 @@ def is_admin():
 def main():
     if not is_admin():
         # Re-run the program with admin rights
-        script_path = os.path.abspath(sys.argv[0])
-        args = f'"{script_path}"'
-        if len(sys.argv) > 1:
-            args += " " + " ".join(f'"{a}"' for a in sys.argv[1:])
-        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, args, os.path.dirname(script_path), 1)
-        sys.exit()
+        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, " ".join(sys.argv), None, 1)
+#        sys.exit()
 
     api = ForgeAPI()
     try:
@@ -812,7 +808,6 @@ def main():
         min_size=(700, 600),
         background_color="#000000",
         screen=target_screen,
-        maximized=True
     )
     api.set_window(window)
     webview.start(debug=False)
