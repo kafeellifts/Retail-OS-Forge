@@ -56,9 +56,9 @@ The program applies the following system-level optimizations:
 ## Tech Stack
 - **Python 3:** The core logic, background threading, and OS interaction layer.
 - **PowerShell:** The underlying execution engine responsible for uninstallation sweeps and deep registry modifications.
-- **CustomTkinter:** Used for the robust, dark-themed native Windows GUI application (`main.py`).
-- **pywebview:** Provides a native Windows wrapper to render the web-based frontend (`forge_app.py`).
-- **HTML5, CSS3, Vanilla JavaScript:** Drives the modern web interface, including 3D tilt effects and dynamic HTML Canvas backgrounds.
+- **pywebview:** Provides a native Windows wrapper to render the web-based frontend.
+- **HTML5, CSS3, Vanilla JavaScript:** Drives the modern web interface, including 3D tilt effects and dynamic HTML Canvas backgrounds, fully embedded in the Python script.
+- **CustomTkinter:** Used for the legacy basic Windows GUI application (`ui.py`).
 - **FastAPI & Uvicorn:** Powers the REST API engine (`api_server.py`) allowing for headless execution and network-based terminal provisioning.
 
 ---
@@ -68,7 +68,6 @@ The program applies the following system-level optimizations:
 ### Prerequisites
 - **Operating System:** Windows 10 or 11
 - **Python:** Python 3.7 or higher installed
-- **Node.js:** Required for the modern UI (TanStack/React)
 
 ### Installation
 1. **Clone the repository:**
@@ -82,25 +81,19 @@ The program applies the following system-level optimizations:
    pip install -r requirements.txt
    ```
 
-3. **Setup the Modern UI:**
-   We've provided a script to handle the nested directory setup and building automatically. Run this from the project root:
-   ```bash
-   setup_ui.bat
-   ```
-   *(Or manually: cd forge-vault-terminal-main/forge-vault-terminal-main && npm install && npm run build)*
-
 ### Running the Application
-To start the Retail OS Forge with the ultra-modern UI:
+To start the Retail OS Forge with the ultra-modern standalone UI:
 ```bash
 python main.py
 ```
-This will automatically launch the background API engine and the UI server.
+This will automatically launch the native window with the interactive frontend and background execution engine.
 
 > [!IMPORTANT]
 > **Admin Privileges:** The application needs to modify registry settings and remove system packages. It will automatically attempt to restart with Administrator privileges if needed.
 
 ### Project Structure
-- `main.py`: The primary entry point (Basic UI).
-- `forge_app.py`: The Modern "Neon" UI version.
+- `main.py`: The primary entry point for the Modern "Neon" UI.
+- `forge_app.py`: The standalone webview and payload implementation.
+- `ui.py`: The legacy Basic UI (CustomTkinter).
 - `api_server.py`: The headless API server version.
 - `config.py`: Centralized configuration for all commands and software links.
