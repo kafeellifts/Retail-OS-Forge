@@ -68,6 +68,7 @@ The program applies the following system-level optimizations:
 ### Prerequisites
 - **Operating System:** Windows 10 or 11
 - **Python:** Python 3.7 or higher installed
+- **Node.js:** Required for the modern UI (TanStack/React)
 
 ### Installation
 1. **Clone the repository:**
@@ -76,17 +77,26 @@ The program applies the following system-level optimizations:
    cd Retail-OS-Forge
    ```
 
-2. **Install dependencies:**
-   It is recommended to use a virtual environment, but you can install them globally:
+2. **Install Python dependencies:**
    ```bash
    pip install -r requirements.txt
    ```
 
+3. **Setup the Modern UI:**
+   Navigate to the UI folder and install Node dependencies:
+   ```bash
+   cd forge-vault-terminal-main/forge-vault-terminal-main
+   npm install
+   npm run build
+   cd ../..
+   ```
+
 ### Running the Application
-To start the Retail OS Forge utility, run the following command in your terminal:
+To start the Retail OS Forge with the ultra-modern UI:
 ```bash
 python main.py
 ```
+This will automatically launch the background API engine and the UI server.
 
 > [!IMPORTANT]
 > **Admin Privileges:** The application needs to modify registry settings and remove system packages. It will automatically attempt to restart with Administrator privileges if needed.
